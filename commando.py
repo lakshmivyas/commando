@@ -51,7 +51,7 @@ class Commando(type):
         if main_command:
             main_parser = ArgumentParser(*main_command.command.args,
                                         **main_command.command.kwargs)
-            add_arguments(main_parser, main_command.params)
+            add_arguments(main_parser, getattr(main_command, 'params', []))
             subparsers = None
             if len(subcommands):
                 subparsers = main_parser.add_subparsers()
@@ -59,7 +59,7 @@ class Commando(type):
                     parser = subparsers.add_parser(*sub.subcommand.args,
                                                   **sub.subcommand.kwargs)
                     parser.set_defaults(run=sub)
-                    add_arguments(parser, sub.params)
+                    add_arguments(parser, getattr(sub, 'params', []))
 
         instance.__parser__ = main_parser
         instance.__main__ = main_command
