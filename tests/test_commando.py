@@ -139,8 +139,28 @@ class ComplexCommandLine(Application):
            assert params.launch1 == eval(params.launch2)
            self._sub()
 
+       @subcommand('foobar', description="foo bar!")
+       def foobar(self, params):
+           assert False
+
+       @subcommand('bla', parent=foobar)
+       @param('--launch2', action='store_true', dest='launch2')
+       def foobar_bla(self, params):
+           assert params.launch2
+           self._foobar_bla()
+
+       @subcommand('blip', parent=foobar)
+       def foobar_blip(self, params):
+           pass
+
+       @subcommand('blop', parent=foobar_blip)
+       def foobar_blip_blop(self, params):
+           self._foobar_blip_blop()
+
        def _main(): pass
        def _sub(): pass
+       def _foobar_bla(): pass
+       def _foobar_blip_blop(): pass
 
 
 @trap_exit_pass
@@ -153,9 +173,25 @@ def test_command_subcommands_usage():
 @trap_exit_fail
 def test_command_subcommands():
     with nested(patch.object(ComplexCommandLine, '_main'),
-                patch.object(ComplexCommandLine, '_sub')) as (_main, _sub):
+                patch.object(ComplexCommandLine, '_sub'),
+                patch.object(ComplexCommandLine, '_foobar_bla'),
+                patch.object(ComplexCommandLine, '_foobar_blip_blop')) \
+                as (_main, _sub, _foobar_bla, _foobar_blip_blop):
         c = ComplexCommandLine()
         args = c.parse(['sub', '--launch', '--launch2', 'True'])
         c.run(args)
         assert not _main.called
         assert _sub.call_count == 1
+
+        args = c.parse(['foobar', 'bla', '--launch2'])
+        c.run(args)
+        assert not _main.called
+        assert _sub.call_count == 1
+        assert _foobar_bla.call_count == 1
+
+        args = c.parse(['foobar', 'blip', 'blop'])
+        c.run(args)
+        assert not _main.called
+        assert _sub.call_count == 1
+        assert _foobar_bla.call_count == 1
+        assert _foobar_blip_blop.call_count == 1
