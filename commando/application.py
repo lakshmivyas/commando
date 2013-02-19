@@ -52,7 +52,7 @@ class Commando(type):
 
         def add_arguments(func):
             params = getattr(func, 'params', [])
-            for parameter in params:
+            for parameter in reversed(params):
                 func.parser.add_argument(*parameter.args, **parameter.kwargs)
 
         def add_subparser(func):
