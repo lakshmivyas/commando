@@ -1,18 +1,21 @@
-# commando - argparse in style
+============================
+commando - argparse in style
+============================
 
-Version 0.3a
+**Version 0.3a**
 
-A simple wrapper for `argparse` that allows commands and arguments
+A simple wrapper for ``argparse`` that allows commands and arguments
 to be defined declaratively using decorators. Note that this does
-not support all the features of `argparse` yet.
+not support all the features of ``argparse`` yet.
 
-Commando also bundles a few utilities that are essential for command
-line applications.
+Commando also bundles a few utilities that are useful when building 
+command line applications.
 
-## Example
+Example
+--------
 
+Without commando::
 
-### Without commando:
 
     def main():
         parser = argparse.ArgumentParser(description='hyde - a python static website generator',
@@ -36,7 +39,7 @@ line applications.
         print params.overwrite
 
 
-### With commando
+With commando::
 
 
     class Engine(Application):
@@ -57,9 +60,17 @@ line applications.
             print params.template
             print params.overwrite
 
-## Authors
+Resources
+---------
 
-*   [Lakshmi Vyas](https://github.com/lakshmivyas)
-*   [Brandon Philips](https://github.com/philips)
-*   [Ben West](https://github.com/bewest)
-*   [Julien Danjou](https://github.com/jd)
+1.  `Changelog`_
+2.  `License`_
+3.  `Contributing`_
+4.  `Authors`_
+
+
+.. _Changelog: CHANGELOG.rst
+.. _LICENSE: LICENSE
+.. _Contributing: CONTRIBUTING.rst
+.. _Authors: AUTHORS.rst
+

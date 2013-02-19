@@ -2,7 +2,6 @@ from collections import defaultdict
 
 seqs = (tuple, list, set, frozenset)
 
-
 class ConfigDict(defaultdict):
     def __init__(self, initial=None):
         super(ConfigDict, self).__init__(ConfigDict)

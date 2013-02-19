@@ -2,10 +2,16 @@ from distribute_setup import use_setuptools
 use_setuptools()
 from setuptools import setup
 
+try:
+    long_description = open('README.rst', 'rt').read()
+except IOError:
+    long_description = ''
+
+
 setup(
     name='commando',
     description='A declarative interface to argparse with additional utilities',
-    long_description='Adds decorators that allow subcommands to be defined as simple functions',
+    long_description=long_description,
 
     version='0.3a',
 

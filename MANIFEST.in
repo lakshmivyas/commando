@@ -4,4 +4,7 @@ include distribute_setup.py
 recursive-include commando *.py
 recursive-include commando/tests *.py *.txt
 include LICENSE
-include README.markdown
+include README.rst
+include AUTHORS.rst
+include CHANGELOG.rst
+include CONTRIBUTING.rst
